@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142b45">
+<title>Marcador de Bolão</title>
+<style>
+:root{--navy:#142b45;--blue:#254e70;--gold:#e6b84c;--cream:#f6f0e3;--wood:#b98d5b;--ink:#1b2b3c;--muted:#6b7785;--line:#d9dfe5;--green:#426c59}
+*{box-sizing:border-box}
+body{margin:0;background:#e9edf0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(135deg,#101f32,#244c6b);color:white;padding:20px 16px 18px;border-bottom:5px solid var(--gold)}
+.wrap{max-width:900px;margin:auto}
+.brand{display:flex;align-items:center;gap:13px}
+.mark{width:60px;height:60px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;position:relative;background:#ffffff0c}
+.mark:before{content:"";position:absolute;width:35px;height:35px;border:1px solid #e6b84c88;border-radius:50%}
+.mark span{font-size:29px;color:var(--gold);z-index:1}
+.kicker{font-size:10px;letter-spacing:2.2px;font-weight:850;color:#e8c96f}
+.brand h1{font-size:27px;line-height:1;margin:4px 0;font-weight:950;letter-spacing:1px}
+.brand p{margin:5px 0 0;color:#d5e0e9;font-size:11px;letter-spacing:1.2px}
+main{max-width:900px;margin:auto;padding:15px}
+.hero{background:var(--cream);border:1px solid #d9c7a6;border-radius:16px;padding:13px;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hero strong{display:block;color:var(--navy);font-size:14px}
+.hero small{color:#75664f;font-size:11px}
+.pin-art{display:flex;align-items:end;gap:3px}
+.pin{width:13px;height:27px;border-radius:8px 8px 5px 5px;background:linear-gradient(90deg,#ddd,#fff 45%,#c9c9c9);border-bottom:4px solid #bd3333;box-shadow:0 2px 2px #0002}
+.scoreboard{background:var(--navy);color:white;border-radius:17px;padding:15px;margin-bottom:14px;box-shadow:0 5px 14px #142b4525}
+.scoreboard .eyebrow{text-align:center;color:#eacb73;font-size:10px;font-weight:900;letter-spacing:2px}
+.scoreboard .sum{font-size:43px;line-height:1.15;text-align:center;font-weight:950;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.scoreboard .caption{text-align:center;font-size:12px;color:#e0e8ef;font-weight:800;letter-spacing:1px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.stat{background:#ffffff12;border:1px solid #ffffff20;border-radius:11px;padding:9px;text-align:center}
+.stat small{display:block;font-size:9px;letter-spacing:1px;color:#c7d4df;font-weight:800}
+.stat b{font-size:19px;font-variant-numeric:tabular-nums}
+.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;margin:13px 0;box-shadow:0 3px 10px #142b4509}
+h2{font-size:15px;margin:0 0 11px;color:var(--navy);letter-spacing:.3px}
+label{font-size:11px;color:var(--muted);font-weight:800;display:block;margin-bottom:5px}
+input{font:inherit}
+.player{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fbfcfd;outline:none}
+.lanes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lane{border:1px solid #d9c8a8;border-radius:13px;overflow:hidden;background:#fffdf8}
+.lane-head{background:linear-gradient(100deg,#172d46,#31536c);color:white;padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+.lane-head b{font-size:14px;letter-spacing:.7px}
+.lane-head span{font-size:10px;font-weight:900;color:#f1cf70;letter-spacing:1px}
+.lane-wood{padding:10px;background:repeating-linear-gradient(90deg,#e8d7b9 0,#e8d7b9 17px,#e2cfad 18px,#e2cfad 34px);border-bottom:1px solid #c8ad84}
+.lane-wood .mini-track{height:24px;border:2px solid #a78356;border-top:0;border-radius:0 0 50% 50%;display:flex;justify-content:center;align-items:center;gap:4px;background:linear-gradient(90deg,#c29b6a,#ead9b8,#c29b6a)}
+.mini-ball{width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#a9b5bf,#26384b 70%);border:1px solid #f2f2f2}
+.mini-pin{width:7px;height:13px;background:#fff;border-radius:5px 5px 3px 3px;border-bottom:2px solid #bd3333}
+.lane-body{padding:10px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.ball label{text-align:center;font-size:9px;letter-spacing:.4px;margin-bottom:4px}
+.score{width:100%;min-width:0;text-align:center;border:1px solid #d9e0e7;border-radius:8px;padding:9px 1px;font-size:17px;font-weight:850;color:var(--navy);background:#f7f9fb;outline:none;font-variant-numeric:tabular-nums}
+.score:focus,.player:focus{border-color:var(--blue);box-shadow:0 0 0 3px #254e7020}
+.lane-total{border-top:1px solid #e8dfd1;margin-top:10px;padding-top:9px;display:flex;align-items:center;justify-content:space-between;color:#71634e;font-size:11px;font-weight:850}
+.lane-total strong{font-size:21px;color:var(--navy)}
+.note{font-size:11px;line-height:1.5;color:var(--muted);margin:10px 2px 0}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:10px;padding:12px 15px;font-weight:850;cursor:pointer}
+.reset{background:var(--gold);color:#192b40;flex:1}
+.print{background:#fff;color:var(--navy);border:1px solid var(--line)}
+footer{text-align:center;padding:18px 10px 25px;color:#77818b;font-size:10px;letter-spacing:1px}
+@media(max-width:560px){.lanes{grid-template-columns:1fr}.brand h1{font-size:24px}.scoreboard .sum{font-size:39px}}
+@media print{body{background:#fff}.actions{display:none}.panel,.scoreboard{box-shadow:none;break-inside:avoid}.score{background:#fff}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap brand">
+<div class="mark"><span>⚜</span></div>
+<div>
+<div class="kicker">MARCADOR DE PONTUAÇÃO</div>
+<h1>BOLÃO</h1>
+<p>4 PISTAS · 40 BOLAS · 1 PARTIDA</p>
+</div>
+</div>
+</header>
+<main>
+<section class="hero">
+<div><strong>PLACAR DA PARTIDA</strong><small>Registre os pontos de cada bola e acompanhe a soma.</small></div>
+<div class="pin-art" aria-hidden="true">
+<i class="pin"></i><i class="pin"></i><i class="pin"></i><i class="pin"></i><i class="pin"></i>
+</div>
+</section>
+<section class="scoreboard">
+<div class="eyebrow">SOMA DAS 4 PISTAS</div>
+<div class="sum" id="grandTotal">0</div>
+<div class="caption">TOTAL DA PARTIDA</div>
+<div class="stats">
+<div class="stat"><small>BOLAS PREENCHIDAS</small><b id="filled">0 / 40</b></div>
+<div class="stat"><small>MÉDIA POR BOLA</small><b id="average">0,0</b></div>
+</div>
+</section>
+<section class="panel">
+<label for="player">JOGADOR / EQUIPE</label>
+<input id="player" class="player" maxlength="45" placeholder="Digite o nome aqui...">
+</section>
+<section class="panel">
+<h2>ANOTAÇÃO DAS BOLAS</h2>
+<div class="lanes" id="lanes"></div>
+<p class="note">CHEIA: pistas 1 e 3 · LIMPA: pistas 2 e 4. Digite somente a pontuação feita em cada bola. Os totais das pistas e a soma da partida são calculados automaticamente.</p>
+</section>
+<div class="actions">
+<button class="reset" id="newGame">↻ NOVA PARTIDA / ZERAR</button>
+<button class="print" id="print">Imprimir placar</button>
+</div>
+<footer>⚜ BOLÃO · MARCADOR DE PARTIDA ⚜</footer>
+</main>
+<script>
+(()=>{
+const key='bolao-marcador-v2';
+const fresh=()=>({player:'',scores:Array.from({length:4},()=>Array(10).fill(''))});
+let state;
+try{state=JSON.parse(localStorage.getItem(key))||fresh()}catch(e){state=fresh()}
+if(!state.scores||state.scores.length!==4)state=fresh();
+const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('pt-BR');
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}}
+function sum(a){return a.reduce((t,v)=>t+(v===''?0:(Number(v)||0)),0)}
+function build(){
+$('lanes').innerHTML='';
+for(let i=0;i<4;i++){
+const clean=i===1||i===3,card=document.createElement('section');card.className='lane';
+card.innerHTML=`<div class="lane-head"><b>PISTA ${i+1}</b><span>${clean?'LIMPA':'CHEIA'}</span></div><div class="lane-wood"><div class="mini-track"><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-pin"></i><i class="mini-ball"></i><i class="mini-pin"></i><i class="mini-pin"></i></div></div><div class="lane-body"><div class="grid"></div><div class="lane-total"><span>SOMA DA PISTA</span><strong id="laneTotal${i}">0</strong></div></div>`;
+const grid=card.querySelector('.grid');
+for(let j=0;j<10;j++){
+const box=document.createElement('div');box.className='ball';
+const label=document.createElement('label');label.textContent='BOLA '+(j+1);
+const inp=document.createElement('input');inp.className='score';inp.type='number';inp.inputMode='decimal';inp.min='0';inp.step='1';inp.placeholder='–';inp.value=state.scores[i][j];inp.setAttribute('aria-label',`Pista ${i+1}, bola ${j+1}`);
+inp.addEventListener('input',()=>{let v=inp.value;if(v!==''&&Number(v)<0){v='0';inp.value=v}state.scores[i][j]=v;save();update()});
+box.append(label,inp);grid.append(box);
+}
+$('lanes').append(card);
+}
+$('player').value=state.player||'';
+}
+function update(){
+const totals=state.scores.map(sum),all=state.scores.flat(),count=all.filter(v=>v!=='').length,total=totals.reduce((a,b)=>a+b,0);
+totals.forEach((n,i)=>$('laneTotal'+i).textContent=fmt(n));
+$('grandTotal').textContent=fmt(total);$('filled').textContent=count+' / 40';
+$('average').textContent=count?(total/count).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}):'0,0';
+}
+$('player').addEventListener('input',e=>{state.player=e.target.value;save()});
+$('newGame').addEventListener('click',()=>{if(!confirm('Zerar as 40 bolas e iniciar uma nova partida?'))return;state={player:state.player||'',scores:Array.from({length:4},()=>Array(10).fill(''))};save();build();update()});
+$('print').addEventListener('click',()=>window.print());
+build();update();
+})();
+</script>
+</body>
+</html>
